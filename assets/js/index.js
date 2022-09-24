@@ -27,8 +27,9 @@ function getUserInfo(){
   //  },
    success:function(res){
     //  console.log(res)
+    if(res.status !==0) return layui.layer.msg('获取用户信息失败！')
      renderAvatar(res.data)
-   },
+   }
   //  不论成功还是失败 最终都会调用complete回调函数
   // complete:function(res){
   //   console.log('执行了complete回调')
@@ -48,8 +49,8 @@ function getUserInfo(){
 function renderAvatar(user){
   // 1.获取用户的名称
   let name = user.nickname || user.username
-  // 2.设置用户的名称
-  $('#welcome').html('欢迎&nbsp;&nbsp;')
+  // 2.设置欢迎的文本
+  $('#welcome').html('欢迎&nbsp;&nbsp;' + name)
   // 3.按需渲染用户的头像
   if(user.user_pic !== null){
     // 3.1渲染图片头像
