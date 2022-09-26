@@ -32,12 +32,29 @@ $(function () {
   // 监听注册表单的提交事件
   $('#form_reg').on('submit', function (e) {
     e.preventDefault()
-    let data = { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() }
-    $.post('/api/reguser', data, function (res) {
-      if (res.status !== 0) return layer.msg(res.message)
-      layer.msg('注册成功，请登录！')
-      // 模拟人的点击行为
-      $('#link_login').click()
+    // let data = 
+    // $.post('/api/reguser', data, function (res) {
+    //   if (res.status !== 0) return layer.msg(res.message)
+    //   layer.msg('注册成功，请登录！')
+    //   // 模拟人的点击行为
+    // $('#link_login').click()
+    // })
+    $.ajax({
+      method: 'POST',
+      url: '/api/reg',
+      // dataType: 'JSON',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        username: $('#form_reg [name=username]').val(),
+        password: $('#form_reg [name=password]').val(),
+        repassword: $('#form_reg [name=repassword]').val()
+      }),
+      success(res) {
+        if (res.code !== 0) return layer.msg(res.message)
+        layer.msg('注册成功，请登录！')
+        // 模拟人的点击行为
+        $('#link_login').click()
+      }
     })
   })
 
@@ -47,9 +64,13 @@ $(function () {
     $.ajax({
       method: 'POST',
       url: '/api/login',
-      data: $(this).serialize(),
+      contentType: 'application/json',
+      data: JSON.stringify({
+        username: $('#userName').val(),
+        password: $('#passWord').val()
+      }),
       success: function (res) {
-        if (res.status !== 0) return layer.msg('登录失败！')
+        if (res.code !== 0) return layer.msg('登录失败！')
         layer.msg('登录成功！')
         console.log(res.token)
         // 将登录成功得到的token将字符串 保存到localStorage中

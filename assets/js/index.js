@@ -27,7 +27,7 @@ function getUserInfo(){
   //  },
    success:function(res){
     //  console.log(res)
-    if(res.status !==0) return layui.layer.msg('获取用户信息失败！')
+    if(res.code !==0) return layui.layer.msg('获取用户信息失败！')
      renderAvatar(res.data)
    }
   //  不论成功还是失败 最终都会调用complete回调函数
