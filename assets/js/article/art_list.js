@@ -14,8 +14,13 @@ $(function () {
     $.ajax({
       method: 'GET',
       url: '/my/article/list',
-      data: q,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        q
+      }),
       success: function (res) {
+        console.log(res);
+        
         if (res.code !== 0) {
           return layer.msg('获取文章列表失败！')
         }

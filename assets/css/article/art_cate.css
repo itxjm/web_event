@@ -11,7 +11,7 @@ body{
   justify-content: space-between;
   align-items: center;
 }
-#form-add{
+#form-add, #form-edit{
   padding-right: 20px;
   padding-top: 30px;
 }

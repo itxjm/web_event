@@ -3,20 +3,23 @@ $(function () {
   initArtCateList()
   // 获取文章分类列表
   function initArtCateList() {
-    const cate_name = $('#form-add [name=cate_name]').val()
-    const cate_alias = $('#form-add [name=cate_alias]').val()
-    const id = $('#form-add [name=id]').val()
+    // const id = $('#form-add [name=id]').val()
+    // const cate_name = $('#form-add [name=cate_name]').val()
+    // const cate_alias = $('#form-add [name=cate_alias]').val()
     $.ajax({
       method: 'GET',
-      url: '/my/cate/info?id=1284',
+      url: '/my/cate/list',
       contentType: 'application/json',
-      data: JSON.stringify({
-        id,
-        cate_name,
-        cate_alias
-      }),
+      
+      // data: JSON.stringify({
+      //   id,
+      //   cate_name,
+      //   cate_alias
+      // }),
+      
       success: function (res) {
-        console.log(res)
+        // if(res.code !== 0) return layer.msg(res.message)
+        console.log(res.data)
         let htmlStr = template('tpl-table', res)
         $('tbody').html(htmlStr)
       }
@@ -39,7 +42,7 @@ $(function () {
     console.log('ok')
     const cate_name = $('#form-add [name=cate_name]').val()
     const cate_alias = $('#form-add [name=cate_alias]').val()
-    const id = $('#form-add [name=id]').val()
+    // const id = $('#form-add [name=id]').val()
     $.ajax({
       method: 'POST',
       url: '/my/cate/add',
@@ -47,10 +50,9 @@ $(function () {
       // headers: {
       //   'Content-Type': 'application/json'
       // },
-      ContentType: 'application/json',
+      contentType: 'application/json',
       // data: $(this).serialize(),
       data: JSON.stringify({
-        id,
         cate_name,
         cate_alias
       }),
@@ -61,6 +63,17 @@ $(function () {
         // 根据索引 关闭对应的弹出层
         layer.close(indexAdd)
       }
+    })
+  })
+
+  // 通过代理的形式  为btn-edit按钮绑定点击事件
+  let indexEdit = null
+  $('tbody').on('click','#btn-edit',function(){
+    indexEdit = layer.open({
+      type: 1,
+      area: ['500px', '250px'],
+      title: '修改文章分类',
+      content: $('#dialog-edit').html()
     })
   })
 })
